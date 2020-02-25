@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+
+<html>
+    <!-- This is a comment -->
+    <head>
+        <meta charset="utf-8">
+        <title>My Example Page</title>
+    </head>
+
+
+    <body>
+        <h4>Daniel Love  <br/> 
+            daniel9love@gmail.com  <br/> 
+            Furture Data Analyst
+        </h4>
+        <hr>
+        <br/>  <br/>  <br/> 
+        
+
+
+        <h1>Project 1 - Is obesity a cause of rising healthcare costs?</h1>
+        <hr>
+
+        <h2>Cost Per Capita of Medicare vs Obesity Rates of People 65 and older (2011)</h2>
+        <img src="images/USMAP_CPC2011.png" alt = "choropleth graph cpc rates"/> <img src="images/USMAP_Obesity2011.png" alt = "choropleth graph obesity rates"/>
+        <br/>   
+            <em>***Choropleth graphs of the US comparing cpc rates to the obesity rates in 2011</em>
+        <hr>
+        <h2>Cost Per Capita of Medicare vs Obesity Rates of People 65 and older (2016)</h2>
+        <img src="images/USMAP_CPC2016.png" alt = "choropleth graph cpc rates"/> <img src="images/USMAP_Obesity2016.png" alt = "choropleth graph obesity rates"/>
+        <br/>    
+            <em>***Choropleth graphs of the US comparing cpc rates to the obesity rates in 2011</em>
+        <hr>
+        <br/>
+        <h2>How to make a choropleth graph:</h2>
+        <p>
+        <ol>
+            <li># Obese population over the age of 65 df (2011) <br/>
+                # Create a dataframe to hold relevant information
+                obese_65_data = pd.read_csv('../Clean_2011_2016/obesity_over_65.csv') <br/>
+                obese_65_data_2011 = obese_65_data.loc[obese_65_data['Year']==2011,:] <br/>
+                obese11 = obese_65_data_2011[['State','Percent Adults']] <br/>
+                <br/>
+                obese_65_data_2016 = obese_65_data.loc[obese_65_data['Year']==2016,:] <br/>
+                obese16 = obese_65_data_2016[['State','Percent Adults']] <br/>
+                obese16.head()
+            </li><br/>
+            <li>
+                # Creating the Choropleth Graph<br/>
+                # Resource I used to help with graph<br/>
+                # https://python-graph-gallery.com/292-choropleth-map-with-folium/<br/>
+                <br/>
+                # Initialize the map:<br/>
+                ob11 = folium.Map(location=[37, -102], zoom_start=4)<br/>
+                <br/>
+                # Add the color for the chloropleth:<br/>
+                ob11.choropleth(<br/>
+                geo_data=state_geo,<br/>
+                name='choropleth',<br/>
+                data=obese11,<br/>
+                columns=['State', 'Percent Adults'],<br/>
+                key_on='feature.id',<br/>
+                fill_color='YlGn',<br/>
+                fill_opacity=0.75,<br/>
+                line_opacity=0.25,<br/>
+                legend_name='Obesity Percent of 65 and Older in 2011')<br/>
+                <br/>
+                folium.LayerControl().add_to(ob11)<br/>
+                <br/>
+                ob11<br/>
+            </li>    
+        </ol>
+        </p>
+    </body>
